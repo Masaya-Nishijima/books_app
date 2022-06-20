@@ -52,7 +52,6 @@ RSpec.describe "Books", type: :system do
     expect {
       expect(page).to have_content "Factory Bots Book"
 
-      # click_link "Destroy"
       accept_alert do
         click_link "Destroy"
       end
