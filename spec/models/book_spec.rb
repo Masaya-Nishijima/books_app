@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
-  let(:book) { FactoryBot.create(:a_book) }
+  let(:book) { FactoryBot.create(:book) }
   context "タイトルと内容と筆者" do
     it 'タイトル' do
       expect(book[:title]).to eq 'A book'

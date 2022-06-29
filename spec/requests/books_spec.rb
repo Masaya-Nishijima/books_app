@@ -27,7 +27,7 @@ RSpec.describe "/books", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      FactoryBot.create(:a_book)
+      FactoryBot.create(:book)
       get books_url
       expect(response).to be_successful
     end
@@ -35,7 +35,7 @@ RSpec.describe "/books", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      book = FactoryBot.create(:a_book)
+      book = FactoryBot.create(:book)
       get book_url(book)
       expect(response).to be_successful
     end
@@ -50,7 +50,7 @@ RSpec.describe "/books", type: :request do
 
   describe "GET /edit" do
     it "renders a successful response" do
-      book = FactoryBot.create(:a_book)
+      book = FactoryBot.create(:book)
       get edit_book_url(book)
       expect(response).to be_successful
     end
@@ -60,12 +60,12 @@ RSpec.describe "/books", type: :request do
     context "with valid parameters" do
       it "creates a new Book" do
         expect {
-          post books_url, params: { book: {title: "b_book"} }
+          post books_url, params: { book: {title: "book_2"} }
         }.to change(Book, :count).by(1)
       end
 
       it "redirects to the created book" do
-        post books_url, params: { book: {title: "b_book"} }
+        post books_url, params: { book: {title: "book_2"} }
         expect(response).to redirect_to(book_url(Book.last))
       end
     end
@@ -74,11 +74,11 @@ RSpec.describe "/books", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        {title: "b_book"}
+        {title: "book_2"}
       }
 
       it "redirects to the book" do
-        book = FactoryBot.create(:a_book)
+        book = FactoryBot.create(:book)
         patch book_url(book), params: {book: new_attributes }
         book.reload
         expect(response).to redirect_to(book_url(book))
@@ -88,14 +88,14 @@ RSpec.describe "/books", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested book" do
-      book = FactoryBot.create(:a_book)
+      book = FactoryBot.create(:book)
       expect {
         delete book_url(book)
       }.to change(Book, :count).by(-1)
     end
 
     it "redirects to the books list" do
-      book = FactoryBot.create(:a_book)
+      book = FactoryBot.create(:book)
       delete book_url(book)
       expect(response).to redirect_to(books_url)
     end

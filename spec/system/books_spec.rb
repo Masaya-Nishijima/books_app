@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Books", type: :system do
-  before do
-    @book = FactoryBot.create(:a_book, title: "Factory Bots Book", author: "FactoryBots")
-  end
+  let!(:book) {FactoryBot.create(:book, title: "Factory Bots Book", author: "FactoryBots")}
 
   scenario "本の詳細を開く" do
     visit books_path
@@ -30,7 +28,7 @@ RSpec.describe "Books", type: :system do
   end
 
   scenario "本を編集する" do
-    visit book_path(@book.id)
+    visit book_path(book.id)
 
     expect{
       click_link "Edit"
