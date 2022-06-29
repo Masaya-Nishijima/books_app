@@ -18,7 +18,6 @@ RSpec.describe Book, type: :model do
 
   context "画像" do
     it do
-      p book
       expect(book[:picture]).to eq 'image.png'
     end
   end
