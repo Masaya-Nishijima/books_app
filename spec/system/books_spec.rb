@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe "Books", type: :system do
   let!(:book) {FactoryBot.create(:book, title: "Factory Bots Book", author: "FactoryBots")}
 
-  scenario "本の詳細を開く" do
+  it "本の詳細を開く" do
     visit books_path
     click_link "Show"
 
     expect(page).to have_content "FactoryBots"
   end
 
-  scenario "新しい本を作成する" do
+  it "新しい本を作成する" do
     visit books_path
 
     expect{
@@ -20,14 +20,17 @@ RSpec.describe "Books", type: :system do
       fill_in "Author", with: "Made by System==Spec"
       click_button "Create Book"
 
+      expect(page).to have_current_path book_path(2)
+
       expect(page).to have_content "Book was successfully created."
       expect(page).to have_content "System Spec"
       expect(page).to have_content "Spec Spec Spec"
       expect(page).to have_content "Made by System==Spec"
     }.to change(Book, :count).by(1)
+
   end
 
-  scenario "本を編集する" do
+  it "本を編集する" do
     visit book_path(book.id)
 
     expect{
@@ -44,7 +47,7 @@ RSpec.describe "Books", type: :system do
     }.to_not change(Book, :count)
   end
 
-  scenario "本を削除する" do
+  it "本を削除する" do
     visit books_path
 
     expect {
