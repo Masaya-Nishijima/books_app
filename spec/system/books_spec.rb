@@ -9,6 +9,7 @@ RSpec.describe 'Books', type: :system do
     visit books_path
     click_link 'Show'
 
+    expect(page).to have_current_path book_path(book)
     expect(page).to have_content 'FactoryBots'
   end
 
@@ -22,7 +23,7 @@ RSpec.describe 'Books', type: :system do
       fill_in 'Author', with: 'Made by System==Spec'
       click_button 'Create Book'
 
-      expect(page).to have_current_path book_path(2)
+      expect(page).to have_current_path book_path(Book.order(:id).last)
 
       expect(page).to have_content 'Book was successfully created.'
       expect(page).to have_content 'System Spec'
@@ -41,6 +42,8 @@ RSpec.describe 'Books', type: :system do
       fill_in 'Author', with: 'Edited by System==Spec'
       click_button 'Update Book'
 
+      expect(page).to have_current_path book_path(book)
+
       expect(page).to have_content 'Book was successfully updated.'
       expect(page).to have_content 'System Spec'
       expect(page).to have_content 'Spec Spec Spec'
@@ -57,6 +60,8 @@ RSpec.describe 'Books', type: :system do
       fill_in 'Memo', with: 'Spec Spec Spec'
       fill_in 'Author', with: 'Edited by System==Spec'
       click_button 'Update Book'
+
+      expect(page).to have_current_path book_path(book)
 
       expect(page).to have_content 'Book was successfully updated.'
       expect(page).to have_content 'System Spec'
