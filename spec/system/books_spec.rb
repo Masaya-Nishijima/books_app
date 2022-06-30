@@ -31,7 +31,7 @@ RSpec.describe 'Books', type: :system do
     end.to change(Book, :count).by(1)
   end
 
-  it '本を編集する' do
+  it '詳細画面から本を編集できる' do
     visit book_path(book.id)
 
     expect do
@@ -47,6 +47,24 @@ RSpec.describe 'Books', type: :system do
       expect(page).to have_content 'Edited by System==Spec'
     end.to_not change(Book, :count)
   end
+
+  it "一覧画面から本を編集できる" do
+    visit books_path
+
+    expect do
+      click_link 'Edit'
+      fill_in 'Title', with: 'System Spec'
+      fill_in 'Memo', with: 'Spec Spec Spec'
+      fill_in 'Author', with: 'Edited by System==Spec'
+      click_button 'Update Book'
+
+      expect(page).to have_content 'Book was successfully updated.'
+      expect(page).to have_content 'System Spec'
+      expect(page).to have_content 'Spec Spec Spec'
+      expect(page).to have_content 'Edited by System==Spec'
+    end.to_not change(Book, :count)
+  end
+
 
   it '本を削除する' do
     visit books_path
